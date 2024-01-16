@@ -395,7 +395,7 @@ int dfu_enter_recovery(struct idevicerestore_client_t* client, plist_t build_ide
 	if (client->build_major > 8) {
 		/* reconnect */
 		debug("Waiting for device to disconnect...\n");
-		cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 60000);
+		cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 120000);
 		if (client->mode != MODE_UNKNOWN || (client->flags & FLAG_QUIT)) {
 			mutex_unlock(&client->device_event_mutex);
 			if (!(client->flags & FLAG_QUIT)) {
@@ -404,7 +404,7 @@ int dfu_enter_recovery(struct idevicerestore_client_t* client, plist_t build_ide
 			return -1;
 		}
 		debug("Waiting for device to reconnect...\n");
-		cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 60000);
+		cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 120000);
 		if ((client->mode != MODE_DFU && client->mode != MODE_RECOVERY) || (client->flags & FLAG_QUIT)) {
 			mutex_unlock(&client->device_event_mutex);
 			if (!(client->flags & FLAG_QUIT)) {
@@ -570,7 +570,7 @@ int dfu_enter_recovery(struct idevicerestore_client_t* client, plist_t build_ide
 	}
 
 	debug("Waiting for device to disconnect...\n");
-	cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 60000);
+	cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 120000);
 	if (client->mode != MODE_UNKNOWN || (client->flags & FLAG_QUIT)) {
 		mutex_unlock(&client->device_event_mutex);
 		if (!(client->flags & FLAG_QUIT)) {
